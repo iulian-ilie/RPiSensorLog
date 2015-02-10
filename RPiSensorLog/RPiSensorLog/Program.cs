@@ -11,13 +11,12 @@ namespace RPiSensorLog
         static void Main(string[] args)
         {
             helpScreen();
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         static void helpScreen()
         {
-            Console.Write(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
-            Console.WriteLine(" Ver. " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
+            Console.WriteLine("Raspberry Pi Sensor Log ver. " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
             Console.WriteLine(String.Format("OS: {0}", Environment.OSVersion));
             Console.WriteLine(string.Format("Local Time: {0}", DateTime.Now));
             Console.WriteLine();
