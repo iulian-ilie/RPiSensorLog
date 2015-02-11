@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace RPiSensorLog
 {
@@ -11,7 +12,16 @@ namespace RPiSensorLog
         static void Main(string[] args)
         {
             helpScreen();
-            //Console.ReadKey();
+            showOptions();
+            Console.ReadKey();
+        }
+
+        static void showOptions()
+        {
+            var options =  ReadOptionsFile();
+            var sensors = ReadSensorsFile();
+            Console.WriteLine("Default delay: " + options.delay);
+            Console.WriteLine("sensor 1: " + sensors.sensorList[0].name);
         }
 
         static void helpScreen()
@@ -28,5 +38,43 @@ namespace RPiSensorLog
             Console.WriteLine();
             //Console.WriteLine("Press any key to exit");
         }
+
+        public static AppOptions ReadOptionsFile()
+         {
+             System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(AppOptions));
+             System.IO.StreamReader file = new System.IO.StreamReader(string.Format(@"{0}\options.xml", Environment.CurrentDirectory));
+             var options = (AppOptions)reader.Deserialize(file);
+             return options;
+         }
+ 
+         public static SensorDirectory ReadSensorsFile()
+         {
+             System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(SensorDirectory));
+             System.IO.StreamReader file = new System.IO.StreamReader(string.Format(@"{0}\sensors.xml", Environment.CurrentDirectory));
+             var sensorDirectory = (SensorDirectory)reader.Deserialize(file);
+             return sensorDirectory;
+         }
     }
+
+    public class AppOptions
+    {
+        public int delay{ get; set; }
+        public string logFile { get; set; }
+        public string logType { get; set; }
+    }
+ 
+    public class SensorDirectory
+    {
+        [XmlElement("Sensor")]
+        public List<Sensor> sensorList = new List<Sensor>();
+    }
+ 
+    public class Sensor
+    {
+        public int ID { get; set; }
+        public string name { get; set; }
+        public int GPIO_PIN { get; set; }
+    }
+
+    
 }

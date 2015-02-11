@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SensorDirectory>
+
+  <Sensor>
+    <ID>01</ID>
+    <name>Temperature</name>
+    <GPIO_PIN>11</GPIO_PIN>
+  </Sensor>
+
+  <Sensor>
+    <ID>02</ID>
+    <name>Pressure</name>
+    <GPIO_PIN>13</GPIO_PIN>
+  </Sensor>
+
+</SensorDirectory>
